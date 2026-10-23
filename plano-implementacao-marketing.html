@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DLA — Plano de Implementação da Estratégia de Marketing</title>
+<style>
+:root{
+  --dla-red:#ed2939; --dla-yellow:#ffe500; --ink:#242426; --muted:#68686d;
+  --paper:#fff; --soft:#f5f5f6; --line:#e7e7e9; --dark:#202023;
+  --dp:#ed2939; --shadow:0 18px 55px rgba(20,20,24,.13);
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#18181b;color:var(--ink)}
+body{overflow:hidden}
+button{font:inherit}
+.deck{height:100%;display:grid;place-items:center;position:relative;padding:28px 28px 76px}
+.slide{display:none;position:relative;width:min( calc(100vw - 56px), calc((100vh - 110px) * 16 / 9));height:min(calc(100vh - 110px), calc((100vw - 56px) * 9 / 16));aspect-ratio:16/9;background:var(--paper);overflow:hidden;box-shadow:var(--shadow);padding:5.2% 6%;flex-direction:column}
+.slide.active{display:flex;animation:fade .22s ease-out}
+@keyframes fade{from{opacity:.45;transform:translateY(5px)}to{opacity:1;transform:none}}
+.slide:before{content:"";position:absolute;left:0;top:0;width:8px;height:100%;background:var(--dla-red)}
+.slide.dark{background:var(--dark);color:white}
+.slide.red{background:var(--dla-red);color:white}
+.slide.dark:before,.slide.red:before{background:var(--dla-yellow)}
+.kicker{display:flex;align-items:center;gap:10px;text-transform:uppercase;letter-spacing:.16em;font-size:clamp(9px,.8vw,13px);font-weight:800;color:var(--dla-red);margin-bottom:1.2em}
+.dark .kicker,.red .kicker{color:var(--dla-yellow)}
+.kicker:before{content:"";display:inline-block;width:25px;height:3px;background:currentColor}
+h1,h2,h3,p{margin-top:0}
+h1{font-size:clamp(30px,4.5vw,72px);line-height:1.03;letter-spacing:-.045em;margin-bottom:.25em;max-width:950px}
+h2{font-size:clamp(24px,3vw,47px);line-height:1.08;letter-spacing:-.035em;margin-bottom:.55em;max-width:1000px}
+h3{font-size:clamp(14px,1.35vw,21px);line-height:1.18;margin-bottom:.55em}
+p,li{font-size:clamp(11px,1.05vw,17px);line-height:1.45}
+.lead{font-size:clamp(15px,1.65vw,25px);line-height:1.42;color:#55565b;max-width:850px}
+.dark .lead,.red .lead{color:rgba(255,255,255,.78)}
+.small{font-size:clamp(9px,.82vw,13px);line-height:1.45;color:var(--muted)}
+.dark .small,.red .small{color:rgba(255,255,255,.68)}
+.footer{position:absolute;bottom:3.3%;left:6%;right:6%;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:1.1%;font-size:clamp(8px,.7vw,11px);color:#77777c}
+.dark .footer,.red .footer{border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.6)}
+.footer .sig{display:flex;gap:7px;align-items:center;font-weight:800;letter-spacing:.1em;color:var(--ink)}
+.dark .footer .sig,.red .footer .sig{color:white}
+.dp-mark{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:5px;background:var(--dp);color:#fff;font-size:10px;letter-spacing:-.08em;font-weight:900}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2.2%}
+.cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.7%}
+.cols4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.2%}
+.card{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:4.5%;min-width:0}
+.dark .card{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.13)}
+.red .card{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.22)}
+.card p:last-child,.card ul:last-child{margin-bottom:0}
+.card .num{font-size:clamp(24px,3vw,46px);font-weight:850;line-height:1;color:var(--dla-red);letter-spacing:-.05em;margin-bottom:.3em}
+.dark .card .num,.red .card .num{color:var(--dla-yellow)}
+.tag{display:inline-flex;align-items:center;padding:5px 9px;border-radius:5px;background:#fff0f1;color:#b91f2b;font-weight:800;font-size:clamp(8px,.7vw,11px);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px}
+.dark .tag,.red .tag{background:rgba(255,229,0,.15);color:var(--dla-yellow)}
+ul.clean{list-style:none;padding:0;margin:0}
+ul.clean li{padding-left:20px;position:relative;margin:.48em 0}
+ul.clean li:before{content:"";position:absolute;left:0;top:.52em;width:7px;height:7px;border-radius:2px;background:var(--dla-red)}
+.dark ul.clean li:before,.red ul.clean li:before{background:var(--dla-yellow)}
+ul.check li:before{content:"✓";width:auto;height:auto;top:0;background:none;color:var(--dla-red);font-weight:900}
+.table{width:100%;border-collapse:collapse;font-size:clamp(9px,.92vw,14px);line-height:1.35}
+.table th{text-align:left;background:var(--ink);color:white;padding:10px 12px;font-weight:750}
+.table td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+.table tr:nth-child(even) td{background:#fafafa}
+.table strong{color:var(--ink)}
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:2%}
+.phase{border-top:5px solid var(--dla-red);padding:12px 12px 0;background:var(--soft);min-height:160px;border-radius:0 0 10px 10px}
+.phase .week{font-size:clamp(10px,.9vw,14px);font-weight:850;color:var(--dla-red);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.phase p{font-size:clamp(9px,.84vw,13px);margin-bottom:.4em}
+.rail{position:fixed;bottom:0;left:0;right:0;height:58px;background:rgba(16,16,18,.96);display:flex;align-items:center;justify-content:center;gap:12px;color:white;z-index:10}
+.ctrl{border:1px solid #55555b;background:#27272b;color:white;border-radius:8px;padding:8px 12px;cursor:pointer;font-weight:700}
+.ctrl:hover{background:#3b3b41}
+.ctrl:disabled{opacity:.35;cursor:not-allowed}
+.progress-wrap{width:min(32vw,360px);height:4px;background:#45454a;border-radius:5px;overflow:hidden}
+.progress{height:100%;width:0;background:var(--dla-red);transition:width .2s}
+.count{font-variant-numeric:tabular-nums;font-size:12px;color:#c7c7cb;min-width:55px;text-align:center}
+.brandline{display:flex;align-items:center;gap:15px;margin-bottom:5%}
+.brandline img{width:90px;height:90px;object-fit:contain;background:white;border-radius:50%;padding:4px}
+.logo-fallback{display:none}
+.cover-grid{display:grid;grid-template-columns:1.5fr .7fr;gap:5%;align-items:center;flex:1}
+.cover-emblem{display:grid;place-items:center;position:relative;min-height:280px}
+.cover-emblem .ring{width:min(24vw,330px);aspect-ratio:1;border:18px solid var(--dla-red);border-radius:50%;display:grid;place-items:center;background:white;box-shadow:0 0 0 8px rgba(237,41,57,.08)}
+.cover-emblem .ring img{width:90%;height:90%;object-fit:contain;border-radius:50%}
+.cover-emblem:after{content:"";position:absolute;width:75%;height:9px;background:var(--dla-yellow);transform:rotate(-32deg);z-index:0;opacity:.9}
+.cover-emblem .ring{z-index:1}
+.pill-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:1.5em}
+.pill{border:1px solid #dddde0;border-radius:99px;padding:7px 12px;font-size:clamp(9px,.85vw,13px);font-weight:750}
+.dark .pill,.red .pill{border-color:rgba(255,255,255,.3)}
+.callout{border-left:5px solid var(--dla-red);padding:2% 2.5%;background:#fff3f4;border-radius:0 9px 9px 0;margin-top:1.5%}
+.callout p{margin:0}
+.dark .callout,.red .callout{background:rgba(255,255,255,.09);border-color:var(--dla-yellow)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:2%;align-items:stretch}
+.step{display:flex;gap:12px;margin:0 0 12px;align-items:flex-start}
+.step-badge{flex:0 0 30px;height:30px;border-radius:8px;background:var(--dla-red);color:white;display:grid;place-items:center;font-weight:900;font-size:13px}
+.step h3{margin:0 0 4px}
+.step p{margin:0;color:var(--muted);font-size:clamp(9px,.9vw,14px)}
+.dark .step p,.red .step p{color:rgba(255,255,255,.7)}
+.amount{font-size:clamp(24px,3.3vw,52px);font-weight:900;letter-spacing:-.05em}
+.mini-line{height:5px;background:var(--dla-yellow);width:65px;margin:1.2em 0}
+.note{font-size:clamp(8px,.75vw,11px);color:var(--muted)}
+@media(max-width:720px){
+ .deck{padding:10px 10px 65px}.slide{width:calc(100vw - 20px);height:calc((100vw - 20px)*9/16);padding:4% 5%}
+ .cols4{grid-template-columns:repeat(2,minmax(0,1fr))}.cols3{gap:1%}
+ .card{padding:3%}.cover-grid{grid-template-columns:1.6fr .7fr}.cover-emblem .ring{border-width:9px}
+ .footer{left:5%;right:5%}.timeline{gap:5px}.phase{padding:7px;min-height:120px}
+}
+@media print{
+ @page{size:landscape;margin:0}
+ html,body{background:white;overflow:visible;height:auto}
+ .deck{display:block;height:auto;padding:0}
+ .slide,.slide.active{display:flex!important;width:100vw;height:56.25vw;max-height:100vh;box-shadow:none;page-break-after:always;break-after:page;animation:none}
+ .rail{display:none}
+}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+<section class="slide active" data-title="Capa">
+  <div class="cover-grid">
+    <div>
+      <div class="brandline">
+        <img src="https://domesticalegalangola.ao/images/logotipo-dla.jpeg" alt="Logótipo Doméstica Legal Angola" onerror="this.style.display='none';document.querySelector('.logo-fallback').style.display='block'">
+        <div class="logo-fallback"><strong style="font-size:25px">DLA</strong><div class="small">DOMÉSTICA LEGAL DE ANGOLA</div></div>
+      </div>
+      <div class="kicker">Plano de execução</div>
+      <h1>Da estratégia à <span style="color:var(--dla-red)">implementação.</span></h1>
+      <p class="lead">Plano de implementação da estratégia de marketing digital da Doméstica Legal Angola.</p>
+      <div class="pill-row"><span class="pill">Luanda</span><span class="pill">Lubango</span><span class="pill">90 dias de gestão</span></div>
+      <p class="small" style="margin-top:2.4em">Documento de trabalho para alinhamento entre a DLA e a equipa de implementação.</p>
+    </div>
+    <div class="cover-emblem"><div class="ring"><img src="https://domesticalegalangola.ao/images/logotipo-dla.jpeg" alt="DLA"></div></div>
+  </div>
+  <div class="footer"><span>PLANO DE IMPLEMENTAÇÃO · 2026</span><span class="sig"><span class="dp-mark">DP</span> DIGITAL PERITOS</span></div>
+</section>
+
+<section class="slide" data-title="Como usar este plano">
+  <div class="kicker">01 · Alinhamento</div><h2>O que este plano define</h2>
+  <p class="lead">Um mapa operacional do que será desenvolvido, por quem, em que sequência e como será avaliado.</p>
+  <div class="cols3" style="margin-top:2%">
+    <div class="card"><div class="num">01</div><h3>Desenvolver</h3><p>Website, landing pages, conteúdos, campanhas e medição.</p></div>
+    <div class="card"><div class="num">02</div><h3>Implementar</h3><p>Sequência de tarefas, dependências, aprovações e responsáveis.</p></div>
+    <div class="card"><div class="num">03</div><h3>Melhorar</h3><p>Testar, acompanhar contactos, medir contratos e otimizar investimento.</p></div>
+  </div>
+  <div class="callout"><p><strong>Regra de execução:</strong> nenhuma campanha é ativada antes de o serviço, a mensagem, o formulário, o atendimento e a medição estarem validados.</p></div>
+  <div class="footer"><span>DLA × DIGITAL PERITOS</span><span>02</span></div>
+</section>
+
+<section class="slide dark" data-title="Objetivo central">
+  <div class="kicker">02 · Objetivo</div><h2>Construir um sistema de aquisição mensurável</h2>
+  <p class="lead">O trabalho não termina quando um anúncio gera um contacto. O processo deve permitir acompanhar esse contacto até à decisão comercial.</p>
+  <div class="cols4" style="margin-top:3%">
+    <div class="card"><div class="num">01</div><h3>Atrair</h3><p>Alcançar públicos relevantes em Luanda e Lubango.</p></div>
+    <div class="card"><div class="num">02</div><h3>Converter</h3><p>Transformar interesse em pedidos claros e utilizáveis.</p></div>
+    <div class="card"><div class="num">03</div><h3>Acompanhar</h3><p>Registar resposta, qualificação, proposta e resultado.</p></div>
+    <div class="card"><div class="num">04</div><h3>Otimizar</h3><p>Investir mais apenas onde os dados justificarem.</p></div>
+  </div>
+  <div class="footer"><span>DLA × DIGITAL PERITOS</span><span>03</span></div>
+</section>
+
+<section class="slide" data-title="Âmbito de trabalho">
+  <div class="kicker">03 · Âmbito</div><h2>Seis frentes de trabalho</h2>
+  <div class="cols3">
+    <div class="card"><span class="tag">Frente 01</span><h3>Estratégia e diagnóstico</h3><p>Oferta, públicos, mensagens, processos e metas iniciais.</p></div>
+    <div class="card"><span class="tag">Frente 02</span><h3>Website e conversão</h3><p>Portal institucional, duas landing pages e formulários.</p></div>
+    <div class="card"><span class="tag">Frente 03</span><h3>Medição</h3><p>Pixels, analytics, UTMs e registo de contactos.</p></div>
+    <div class="card"><span class="tag">Frente 04</span><h3>Conteúdo</h3><p>Calendário, peças gráficas, vídeos curtos e publicação.</p></div>
+    <div class="card"><span class="tag">Frente 05</span><h3>Publicidade</h3><p>Campanhas por serviço e cidade, testes e otimização.</p></div>
+    <div class="card"><span class="tag">Frente 06</span><h3>Gestão e análise</h3><p>Relatórios, acompanhamento comercial e recomendações.</p></div>
+  </div>
+  <div class="footer"><span>DLA × DIGITAL PERITOS</span><span>04</span></div>
+</section>
+
+<section class="slide" data-title="Serviços e públicos">
+  <div class="kicker">04 · Oferta</div><h2>Dois serviços, duas jornadas distintas</h2>
+  <div class="split">
+    <div class="card" style="border-top:5px solid var(--dla-red)">
+      <span class="tag">Serviço A</span><h3>Formalização de relação existente</h3>
+      <p><strong>Público:</strong> empregador que já tem uma trabalhadora doméstica.</p>
+      <p><strong>Necessidade:</strong> compreender o processo e iniciar a formalização.</p>
+      <p><strong>Conversão:</strong> pedido de formalização qualificado.</p>
+      <p><strong>CTA proposto:</strong> “Iniciar processo de formalização”.</p>
+    </div>
+    <div class="card" style="border-top:5px solid var(--dla-yellow)">
+      <span class="tag">Serviço B</span><h3>Disponibilização de trabalhadora</h3>
+      <p><strong>Público:</strong> pessoa ou família que procura contratar.</p>
+      <p><strong>Necessidade:</strong> indicar perfil, localização e disponibilidade.</p>
+      <p><strong>Conversão:</strong> pedido de serviço qualificado.</p>
+      <p><strong>CTA proposto:</strong> “Solicitar uma trabalhadora”.</p>
+    </div>
+  </div>
+  <div class="callout"><p><strong>Acção da DLA:</strong> validar critérios, preços, condições, prazos, documentação e limites de cada serviço antes de redigir a comunicação final.</p></div>
+  <div class="footer"><span>DLA × DIGITAL PERITOS</span><span>05</span></div>
+</section>
+
+<section class="slide" data-title="Mapa da jornada">
+  <div class="kicker">05 · Jornada do cliente</div><h2>O percurso que vamos construir</h2>
+  <div class="cols3" style="margin-top:2%">
+    <div class="card"><div class="num">1</div><h3>Descoberta</h3><p>Anúncio, conteúdo educativo ou pesquisa.</p><p class="small">Responsável: Digital Peritos</p></div>
+    <div class="card"><div class="num">2</div><h3>Informação</h3><p>Landing page explica o serviço e responde às dúvidas essenciais.</p><p class="small">Responsáveis: DP + DLA</p></div>
+    <div class="card"><div class="num">3</div><h3>Pedido</h3><p>Formulário recolhe dados necessários e identifica a origem.</p><p class="small">Responsáveis: DP + DLA</p></div>
+    <div class="card"><div class="num">4</div><h3>Contacto</h3><p>A equipa DLA responde, qualifica e regista o pedido.</p><p class="small">Responsável: DLA</p></div>
+    <div class="card"><div class="num">5</div><h3>Contrato</h3><p>Oportunidade avança, não avança ou fica pendente, com motivo registado.</p><p class="small">Responsável: DLA</p></div>
+    <div class="card"><div class="num">6</div><h3>Aprendizagem</h3><p>Resultados comerciais alimentam a otimização das campanhas.</p><p class="small">Responsáveis: DP + DLA</p></div>
+  </div>
+  <div class="footer"><span>DLA × DIGITAL PERITOS</span><span>06</span></div>
+</section>
+
+<section class="slide" data-title="Diagnóstico e validação">
+  <div class="kicker">06 · Fase 1</div><h2>Semana 1 — Diagnóstico e decisões</h2>
+  <div class="cols">
+    <div>
+      <h3>Acções da Digital Peritos</h3>
+      <ul class="clean">
+        <li>Auditar website, redes sociais e presença digital.</li>
+        <li>Mapear o percurso actual do contacto até ao contrato.</li>
+        <li>Definir públicos, mensagens e estrutura de campanhas.</li>
+        <li>Desenhar os indicadores e o modelo de reporte.</li>
+        <li>Preparar mapa de conteúdo e arquitectura das páginas.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Informação necessária da DLA</h3>
+      <ul class="clean">
+        <li>Preços, comissões, condições e custos por serviço.</li>
+        <li>Critérios de selecção e processo de disponibilização.</li>
+        <li>Áreas exactas atendidas em Luanda e Lubango.</li>
+        <li>Responsável, canais e prazo de resposta aos pedidos.</li>
+        <li>Materiais, fotografias, testemunhos e perguntas frequentes.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout"><p><strong>Entregável / ponto de aprovação:</strong> diagnóstico resumido, mensagens prioritárias, jornada comercial e plano de implementação validados.</p></div>
+  <div class="footer"><span>DLA × DIGITAL PERITOS</span><span>07</span></div>
+</section>
+
+<section class="slide" data-title="Website e páginas">
+  <div class="kicker">07 · Fase 2</div><h2>Semanas 2–4 — Website e conversão</h2>
+  <div class="cols">
+    <div class="card">
+      <h3>Portal institucional</h3>
+      <ul class="clean">
+        <li>Reorganizar página inicial e navegação.</li>
+        <li>Clarificar os dois serviços e a proposta de valor.</li>
+        <li>Apresentar processo, perguntas frequentes e contactos.</li>
+        <li>Preservar a identidade visual da DLA.</li>
+        <li>Optimizar a experiência em telemóveis.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Duas landing pages</h3>
+      <ul class="clean">
+        <li>Formalização: explicar e iniciar pedido.</li>
+        <li>Disponibilização: recolher necessidade do cliente.</li>
+        <li>Formulários simples e chamadas à acção claras.</li>
+        <li>Registar origem de campanha e cidade.</li>
+        <li>Testar envio, confirmação e encaminhamento do pedido.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout"><p><strong>Critério de conclusão:</strong> páginas aprovadas, formulários funcionais em telemóvel e computador, contactos encaminhados para o responsável certo.</p></div>
+  <div class="footer"><span>DLA × DIGITAL PERITOS</span><span>08</span></div>
+</section>
+
+<section class="slide" data-title="Medição técnica">
+  <div class="kicker">08 · Fase 2</div><h2>Configurar medição antes de anunciar</h2>
+  <div class="cols3">
+    <div class="card"><h3>Analytics</h3><p>Configurar Google Analytics 4 e eventos relevantes, se aplicável.</p></div>
+    <div class="card"><h3>Publicidade</h3><p>Configurar Meta Pixel e eventos de conversão, respeitando consentimentos e requisitos técnicos.</p></div>
+    <div class="card"><h3>Campanhas</h3><p>UTMs padronizadas para identificar cidade, serviço, campanha e criativo.</p></div>
+    <div class="card"><h3>Testes</h3><p>Testar visitas, formulários, cliques e registos de conversão.</p></div>
+    <div class="card"><h3>Registo comercial</h3><p>Preparar folha/CRM simples com estado, data, origem e resultado.</p></div>
+    <div class="card"><h3>Privacidade</h3><p>Recolher apenas os dados necessários e definir acesso e conservação com a DLA.</p></div>
+  </div>
+  <div class="callout"><p><strong>Critério de conclusão:</strong> um pedido de teste pode ser seguido desde a campanha até ao registo comercial, sem duplicação evidente.</p></div>
+  <div class="footer"><span>DLA × DIGITAL PERITOS</span><span>09</span></div>
+</section>
+
+<section class="slide" data-title="Plano de conteúdo">
+  <div class="kicker">09 · Conteúdo</div><h2>Produção mensal: conteúdo com função definida</h2>
+  <div class="cols4">
+    <div class="card"><div class="num">8</div><h3>Peças gráficas</h3><p>Publicações estáticas ou carrosséis por mês.</p></div>
+    <div class="card"><div class="num">4</div><h3>Vídeos curtos</h3><p>Produção simples por mês, com materiais e aprovações.</p></div>
+    <div class="card"><div class="num">1</div><h3>Calendário</h3><p>Plano editorial mensal e distribuição por pilar.</p></div>
+    <div class="card"><div class="num">1</div><h3>Revisão</h3><p>Leitura do desempenho e recomendações para o mês seguinte.</p></div>
+  </div>
+  <div class="cols" style="margin-top:2%">
+    <div><h3>Pilares editoriais</h3><ul class="clean"><li>Informação e esclarecimento.</li><li>Confiança e profissionalismo.</li><li>Dignidade e reconhecimento.</li><li>Apresentação dos serviços.</li><li>Conversão e perguntas frequentes.</li></ul></div>
+    <div><h3>Fluxo de produção</h3><ul class="clean"><li>DP prepara calendário e conteúdos.</li><li>DLA valida factos, condições e mensagens.</li><li>DP agenda/publica após aprovação.</li><li>DP monitoriza e propõe ajustes.</li><li>Produção especial é orçamentada à parte.</li></ul></div>
+  </div>
+  <div class="footer"><span>DLA × DIGITAL PERITOS</span><span>10</span></div>
+</section>
+
+<section class="slide" data-title="Arquitectura de campanhas">
+  <div class="kicker">10 · Publicidade</div><h2>Separar campanhas por serviço e cidade</h2>
+  <table class="table">
+    <thead><tr><th>Campanha</th><th>Público / mensagem</th><th>Destino</th><th>Conversão medida</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Formalização — Luanda</strong></td><td>Empregadores com relação existente</td><td>Landing page A</td><td>Pedido qualificado</td></tr>
+      <tr><td><strong>Formalização — Lubango</strong></td><td>Empregadores com relação existente</td><td>Landing page A</td><td>Pedido qualificado</td></tr>
+      <tr><td><strong>Disponibilização — Luanda</strong></td><td>Pessoas que procuram trabalhadora</td><td>Landing page B</td><td>Pedido de serviço</td></tr>
+      <tr><td><strong>Disponibilização — Lubango</strong></td><td>Pessoas que procuram trabalhadora</td><td>Landing page B</td><td>Pedido de serviço</td></tr>
+      <tr><td><strong>Notoriedade / remarketing</strong></td><td>Reconhecimento e pessoas que já interagiram</td><td>Conteúdo ou página relevante</td><td>Alcance / retorno / conversão</td></tr>
+    </tbody>
+  </table>
+  <p class="small" style="margin-top:1.2%">A estrutura é uma arquitectura inicial. O número de conjuntos activos será ajustado ao orçamento, volume de procura e capacidade de atendimento — sem fragmentar excessivamente o investimento.</p>
+  <div class="footer"><span>DLA × DIGITAL PERITOS</span><span>11</span></div>
+</section>
+
+<section class="slide" data-title="Orçamento e teste">
+  <div class="kicker">11 · Investimento em anúncios</div><h2>Começar com teste controlado</h2>
+  <div class="cols">
+    <div class="card">
+      <span class="tag">Referência inicial</span>
+      <div class="amount">300.000 Kz</div>
+      <h3>Orçamento publicitário mensal</h3>
+      <p>Pago directamente pela DLA às plataformas. Não está incluído nos honorários de gestão.</p>
+      <p class="small">A distribuição por cidade e serviço será definida após validar procura, economia e capacidade operacional.</p>
+    </div>
+    <div class="card">
+      <h3>Regras de optimização</h3>
+      <ul class="clean">
+        <li>Não repartir automaticamente 50/50 por cidade.</li>
+        <li>Testar criativos e mensagens em cada serviço.</li>
+        <li>Verificar qualidade e velocidade de resposta aos contactos.</li>
+        <li>Evitar conclusões com amostras demasiado pequenas.</li>
+        <li>Aumentar investimento apenas com evidência de desempenho.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout"><p><strong>Importante:</strong> o orçamento é uma hipótese de teste, não uma promessa de rentabilidade. A meta de custo por contrato será definida depois de obter valores reais e dados de conversão.</p></div>
+  <div class="footer"><span>DLA × DIGITAL PERITOS</span><span>12</span></div>
+</section>
+
+<section class="slide" data-title="Atendimento e qualificação">
+  <div class="kicker">12 · Operação comercial</div><h2>O marketing só funciona com resposta comercial</h2>
+  <div class="cols">
+    <div>
+      <h3>Fluxo obrigatório de atendimento</h3>
+      <div class="step"><span class="step-badge">1</span><div><h3>Receber</h3><p>Confirmar que o pedido chegou ao responsável.</p></div></div>
+      <div class="step"><span class="step-badge">2</span><div><h3>Responder</h3><p>Contactar dentro do prazo definido pela DLA.</p></div></div>
+      <div class="step"><span class="step-badge">3</span><div><h3>Qualificar</h3><p>Confirmar necessidade, localização e adequação ao serviço.</p></div></div>
+      <div class="step"><span class="step-badge">4</span><div><h3>Acompanhar</h3><p>Registar proposta, decisão, pendência ou motivo de perda.</p></div></div>
+    </div>
+    <div class="card">
+      <h3>Estados mínimos no registo</h3>
+      <ul class="clean">
+        <li>Novo contacto</li><li>Contactado</li><li>Qualificado</li><li>Proposta / processo iniciado</li><li>Contrato concluído</li><li>Perdido / não elegível</li>
+      </ul>
+      <p class="small">Registar também serviço, cidade, data, origem, valor estimado, receita recebida e motivo de perda, quando aplicável.</p>
+    </div>
+  </div>
+  <div class="footer"><span>DLA × DIGITAL PERITOS</span><span>13</span></div>
+</section>
+
+<section class="slide" data-title="Plano de 90 dias">
+  <div class="kicker">13 · Gestão contínua</div><h2>Os primeiros 90 dias após o lançamento</h2>
+  <div class="timeline">
+    <div class="phase"><div class="week">Dias 1–30</div><h3>Validar</h3><p>Verificar funcionamento, qualidade dos contactos, mensagens e tempos de resposta.</p><p><strong>Saída:</strong> primeiras aprendizagens.</p></div>
+    <div class="phase"><div class="week">Dias 31–60</div><h3>Optimizar</h3><p>Comparar serviços/cidades, ajustar criativos, formulários e distribuição de verba.</p><p><strong>Saída:</strong> hipóteses melhores fundamentadas.</p></div>
+    <div class="phase"><div class="week">Dias 61–90</div><h3>Avaliar</h3><p>Relacionar investimento com contratos, receitas recebidas e custos operacionais.</p><p><strong>Saída:</strong> análise de rentabilidade.</p></div>
+    <div class="phase"><div class="week">Decisão</div><h3>Escalar ou corrigir</h3><p>Manter, alterar ou ampliar com base em evidência e capacidade de resposta.</p><p><strong>Saída:</strong> plano do ciclo seguinte.</p></div>
+  </div>
+  <div class="callout"><p>O período de 90 dias começa quando as campanhas forem activadas. A implementação inicial do website e da medição decorre antes disso.</p></div>
+  <div class="footer"><span>DLA × DIGITAL PERITOS</span><span>14</span></div>
+</section>
+
+<section class="slide" data-title="Indicadores">
+  <div class="kicker">14 · Indicadores</div><h2>O que será acompanhado e reportado</h2>
+  <table class="table">
+    <thead><tr><th>Dimensão</th><th>Indicadores</th><th>Decisão que suportam</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Aquisição</strong></td><td>Investimento, alcance, cliques, contactos e custo por contacto</td><td>Quais anúncios atraem interesse?</td></tr>
+      <tr><td><strong>Qualidade</strong></td><td>Contactos qualificados, elegibilidade e velocidade de resposta</td><td>Os pedidos são úteis para a operação?</td></tr>
+      <tr><td><strong>Conversão</strong></td><td>Processos iniciados, contratos concluídos e custo por contrato</td><td>O contacto transforma-se em negócio?</td></tr>
+      <tr><td><strong>Economia</strong></td><td>Receita recebida, custos variáveis e contribuição por contrato</td><td>O serviço compensa o investimento?</td></tr>
+      <tr><td><strong>Mercado</strong></td><td>Resultados por serviço, cidade, campanha e criativo</td><td>Onde devemos concentrar recursos?</td></tr>
+    </tbody>
+  </table>
+  <p class="small" style="margin-top:1%">Relatório mensal com leitura dos resultados, limitações dos dados, acções executadas e prioridades do mês seguinte.</p>
+  <div class="footer"><span>DLA × DIGITAL PERITOS</span><span>15</span></div>
+</section>
+
+<section class="slide" data-title="Economia e metas">
+  <div class="kicker">15 · Viabilidade económica</div><h2>Definir metas com números reais</h2>
+  <div class="cols">
+    <div class="card">
+      <h3>Modelo de remuneração comunicado</h3>
+      <p><strong>Formalização:</strong> 4% do valor do contrato entre empregador e trabalhadora.</p>
+      <p><strong>Disponibilização:</strong> pelo menos 30% do valor do acordo com o cliente.</p>
+      <p class="small">Os valores médios dos contratos, custos operacionais e prazos de recebimento ainda precisam de ser confirmados.</p>
+    </div>
+    <div class="card">
+      <h3>Dados necessários para fixar CPA</h3>
+      <ul class="clean">
+        <li>Valor médio de contrato por serviço.</li>
+        <li>Custos variáveis para concluir cada contrato.</li>
+        <li>Percentagem de contactos que converte.</li>
+        <li>Prazo entre contacto, contrato e recebimento.</li>
+        <li>Capacidade de atendimento e execução por cidade.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout"><p><strong>Decisão pendente:</strong> não fixar metas finais de custo por aquisição nem prometer retorno até os dados reais serem disponibilizados e analisados.</p></div>
+  <div class="footer"><span>DLA × DIGITAL PERITOS</span><span>16</span></div>
+</section>
+
+<section class="slide" data-title="Responsabilidades">
+  <div class="kicker">16 · Governança</div><h2>Responsabilidades claras</h2>
+  <table class="table">
+    <thead><tr><th>Actividade</th><th>Digital Peritos</th><th>DLA</th></tr></thead>
+    <tbody>
+      <tr><td>Estratégia, plano e campanhas</td><td>Executa e recomenda</td><td>Valida direcção e condições</td></tr>
+      <tr><td>Website e landing pages</td><td>Desenvolve e testa</td><td>Fornece informação e aprova</td></tr>
+      <tr><td>Conteúdos e anúncios</td><td>Cria, agenda e optimiza</td><td>Valida factos, preços e alegações</td></tr>
+      <tr><td>Orçamento publicitário</td><td>Recomenda e gere campanhas</td><td>Aprova e paga directamente</td></tr>
+      <tr><td>Resposta a contactos</td><td>Acompanha métricas</td><td>Contacta, qualifica e regista</td></tr>
+      <tr><td>Resultados comerciais</td><td>Analisa e recomenda</td><td>Partilha estados, contratos e receita recebida</td></tr>
+    </tbody>
+  </table>
+  <div class="footer"><span>DLA × DIGITAL PERITOS</span><span>17</span></div>
+</section>
+
+<section class="slide" data-title="Calendário macro">
+  <div class="kicker">17 · Cronograma</div><h2>Sequência de execução e dependências</h2>
+  <table class="table">
+    <thead><tr><th>Período</th><th>Actividade principal</th><th>Dependência / aprovação</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Semana 1</strong></td><td>Diagnóstico, oferta, jornada, mensagens e métricas</td><td>Informação comercial e responsável DLA</td></tr>
+      <tr><td><strong>Semanas 2–3</strong></td><td>Reformulação do website e desenvolvimento das landing pages</td><td>Conteúdo, acessos e feedback DLA</td></tr>
+      <tr><td><strong>Semana 4</strong></td><td>Medição, testes, criativos iniciais e configuração de campanhas</td><td>Aprovação de páginas, anúncios e orçamento</td></tr>
+      <tr><td><strong>Dias 1–30 após activação</strong></td><td>Validação inicial e correcção de problemas</td><td>Resposta rápida e registo de contactos</td></tr>
+      <tr><td><strong>Dias 31–60</strong></td><td>Optimização de campanhas e conversão</td><td>Dados de qualidade e resultados comerciais</td></tr>
+      <tr><td><strong>Dias 61–90</strong></td><td>Avaliação económica e plano seguinte</td><td>Dados de contratos e receita recebida</td></tr>
+    </tbody>
+  </table>
+  <div class="footer"><span>DLA × DIGITAL PERITOS</span><span>18</span></div>
+</section>
+
+<section class="slide" data-title="Investimento">
+  <div class="kicker">18 · Investimento previsto</div><h2>Investimento de implementação e gestão</h2>
+  <div class="cols3">
+    <div class="card"><p class="small">Implementação única</p><div class="amount">1.500.000</div><p><strong>Kz</strong></p><p class="small">Estratégia, website, landing pages, medição e preparação de campanhas.</p></div>
+    <div class="card"><p class="small">Gestão mensal</p><div class="amount">650.000</div><p><strong>Kz / mês</strong></p><p class="small">Conteúdos, publicação, gestão de anúncios, análise e optimização.</p></div>
+    <div class="card"><p class="small">Publicidade inicial</p><div class="amount">300.000</div><p><strong>Kz / mês</strong></p><p class="small">Referência para teste, paga directamente pela DLA às plataformas.</p></div>
+  </div>
+  <div class="callout"><p><strong>Cenário de referência:</strong> 1.500.000 Kz de implementação + 1.950.000 Kz de gestão de 90 dias + 900.000 Kz de publicidade = <strong>4.350.000 Kz</strong>, antes de custos externos e impostos aplicáveis.</p></div>
+  <p class="note">Valores indicativos sujeitos à validação final do âmbito, materiais disponíveis e enquadramento fiscal.</p>
+  <div class="footer"><span>DLA × DIGITAL PERITOS</span><span>19</span></div>
+</section>
+
+<section class="slide" data-title="Fora do âmbito">
+  <div class="kicker">19 · Limites do projecto</div><h2>O que não está incluído</h2>
+  <div class="cols">
+    <div><ul class="clean">
+      <li>Investimento em anúncios pago às plataformas.</li>
+      <li>Domínio, alojamento, licenças e ferramentas pagas.</li>
+      <li>Produção audiovisual profissional ou sessões especiais.</li>
+      <li>Atores, modelos e equipas externas de produção.</li>
+    </ul></div>
+    <div><ul class="clean">
+      <li>CRM pago ou automações com custos adicionais.</li>
+      <li>Integrações complexas ou novas funcionalidades fora do âmbito.</li>
+      <li>Pareceres jurídicos, certificações ou validações externas.</li>
+      <li>Deslocações e despesas extraordinárias.</li>
+    </ul></div>
+  </div>
+  <div class="callout"><p>Qualquer despesa externa ou alteração de âmbito será apresentada para aprovação prévia. A DLA mantém o controlo dos seus activos digitais e contas.</p></div>
+  <div class="footer"><span>DLA × DIGITAL PERITOS</span><span>20</span></div>
+</section>
+
+<section class="slide" data-title="Riscos e prevenção">
+  <div class="kicker">20 · Gestão de risco</div><h2>Bloqueios previsíveis e como preveni-los</h2>
+  <table class="table">
+    <thead><tr><th>Risco</th><th>Efeito possível</th><th>Acção preventiva</th></tr></thead>
+    <tbody>
+      <tr><td>Preços ou condições pouco claros</td><td>Contactos sem intenção ou expectativas erradas</td><td>Validar oferta e perguntas frequentes antes dos anúncios</td></tr>
+      <tr><td>Resposta lenta aos pedidos</td><td>Perda de oportunidades</td><td>Definir responsável, prazo e processo de seguimento</td></tr>
+      <tr><td>Falta de registo comercial</td><td>Impossibilidade de medir contratos</td><td>Adoptar registo simples e actualização regular</td></tr>
+      <tr><td>Orçamento fragmentado</td><td>Dados insuficientes por campanha</td><td>Concentrar testes e consolidar quando necessário</td></tr>
+      <tr><td>Alegações legais não validadas</td><td>Risco de comunicação incorrecta</td><td>Validação pela DLA antes da publicação</td></tr>
+    </tbody>
+  </table>
+  <div class="footer"><span>DLA × DIGITAL PERITOS</span><span>21</span></div>
+</section>
+
+<section class="slide" data-title="Checklist de lançamento">
+  <div class="kicker">21 · Gate de lançamento</div><h2>Checklist antes de activar campanhas</h2>
+  <div class="cols">
+    <div class="card"><h3>Oferta e operação</h3><ul class="clean check"><li>Serviços e condições confirmados</li><li>Preços/comissões validados</li><li>Critérios de elegibilidade definidos</li><li>Responsável por contacto nomeado</li><li>Prazo de resposta acordado</li></ul></div>
+    <div class="card"><h3>Digital e medição</h3><ul class="clean check"><li>Website e landing pages aprovados</li><li>Formulários testados</li><li>Eventos e UTMs verificados</li><li>Anúncios e conteúdos aprovados</li><li>Orçamento e acessos confirmados</li></ul></div>
+  </div>
+  <div class="callout"><p><strong>Decisão de lançamento:</strong> activar apenas quando os itens críticos estiverem concluídos e a DLA confirmar capacidade para responder e executar os serviços promovidos.</p></div>
+  <div class="footer"><span>DLA × DIGITAL PERITOS</span><span>22</span></div>
+</section>
+
+<section class="slide red" data-title="Próximas decisões">
+  <div class="kicker">22 · Próximos passos</div><h2>O que precisamos de fechar em conjunto</h2>
+  <div class="cols">
+    <div>
+      <div class="step"><span class="step-badge">1</span><div><h3>Validar o âmbito e investimento</h3><p>Confirmar implementação, mensalidade e orçamento de publicidade.</p></div></div>
+      <div class="step"><span class="step-badge">2</span><div><h3>Entregar dados comerciais</h3><p>Preços, comissões, critérios, custos e condições dos serviços.</p></div></div>
+      <div class="step"><span class="step-badge">3</span><div><h3>Nomear responsáveis</h3><p>Aprovação de conteúdo, atendimento e reporte comercial.</p></div></div>
+    </div>
+    <div>
+      <div class="step"><span class="step-badge">4</span><div><h3>Disponibilizar acessos e materiais</h3><p>Website, redes sociais, logótipos, fotografias e informação institucional.</p></div></div>
+      <div class="step"><span class="step-badge">5</span><div><h3>Iniciar diagnóstico</h3><p>Começar a primeira semana de trabalho e confirmar o calendário.</p></div></div>
+    </div>
+  </div>
+  <div class="mini-line"></div><p class="lead">O resultado esperado é uma operação de marketing clara, rastreável e orientada a contratos — não apenas a alcance ou contactos.</p>
+  <div class="footer"><span>PLANO DE IMPLEMENTAÇÃO · DLA</span><span class="sig"><span class="dp-mark" style="background:white;color:var(--dla-red)">DP</span> DIGITAL PERITOS</span></div>
+</section>
+
+<section class="slide dark" data-title="Fecho">
+  <div class="kicker">DLA × Digital Peritos</div>
+  <h1>Implementar com clareza. Medir com rigor. Crescer com evidência.</h1>
+  <div class="mini-line"></div>
+  <p class="lead">Plano de implementação da estratégia de marketing digital<br>Luanda · Lubango · 2026</p>
+  <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between">
+    <div><div style="font-size:clamp(16px,2vw,28px);font-weight:900;letter-spacing:.04em">DOMÉSTICA LEGAL ANGOLA</div><p class="small">Transformar a informalidade em dignidade.</p></div>
+    <div class="sig" style="display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.12em"><span class="dp-mark" style="width:38px;height:38px;font-size:16px">DP</span><span>DIGITAL<br>PERITOS</span></div>
+  </div>
+  <div class="footer"><span>DOCUMENTO DE TRABALHO · SUJEITO A VALIDAÇÃO CONJUNTA</span><span>24</span></div>
+</section>
+</div>
+
+<nav class="rail" aria-label="Controlos da apresentação">
+  <button class="ctrl" id="prev" aria-label="Slide anterior">← Anterior</button>
+  <div class="progress-wrap"><div class="progress" id="progress"></div></div>
+  <span class="count" id="count">01 / 24</span>
+  <button class="ctrl" id="next" aria-label="Próximo slide">Seguinte →</button>
+  <button class="ctrl" id="print">PDF / Imprimir</button>
+  <button class="ctrl" id="full">Ecrã inteiro</button>
+</nav>
+<script>
+(() => {
+  const slides = [...document.querySelectorAll('.slide')];
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  const count = document.getElementById('count');
+  const progress = document.getElementById('progress');
+  let index = 0;
+  function show(n){
+    index = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s,i)=>s.classList.toggle('active',i===index));
+    count.textContent = String(index+1).padStart(2,'0') + ' / ' + String(slides.length).padStart(2,'0');
+    progress.style.width = ((index+1)/slides.length*100) + '%';
+    prev.disabled = index === 0; next.disabled = index === slides.length-1;
+    document.title = slides[index].dataset.title + ' — Plano DLA';
+    history.replaceState(null,'','#slide-'+(index+1));
+  }
+  prev.addEventListener('click',()=>show(index-1));
+  next.addEventListener('click',()=>show(index+1));
+  document.getElementById('print').addEventListener('click',()=>window.print());
+  document.getElementById('full').addEventListener('click',async()=>{
+    try { if(!document.fullscreenElement) await document.documentElement.requestFullscreen(); else await document.exitFullscreen(); } catch(e) {}
+  });
+  document.addEventListener('keydown',e=>{
+    if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(index+1);}
+    if(['ArrowLeft','PageUp','Backspace'].includes(e.key)){e.preventDefault();show(index-1);}
+    if(e.key==='Home')show(0);
+    if(e.key==='End')show(slides.length-1);
+    if(e.key.toLowerCase()==='p')window.print();
+  });
+  let startX=0;
+  document.addEventListener('touchstart',e=>{startX=e.changedTouches[0].screenX},{passive:true});
+  document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].screenX-startX;if(Math.abs(dx)>60)show(index+(dx<0?1:-1))},{passive:true});
+  const hash = location.hash.match(/slide-(\d+)/);
+  if(hash) index = Math.max(0,Math.min(slides.length-1,Number(hash[1])-1));
+  show(index);
+})();
+</script>
+</body>
+</html>
